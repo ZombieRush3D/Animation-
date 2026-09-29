@@ -1,303 +1,432 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MAXIM</title>
+<title>MAXIM</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #000;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+}
 
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-    /* Roter Glow */
-    #glow {
-      position: absolute;
-      width: 45vw;
-      height: 120vh;
-      left: -50vw;
-      top: -10vh;
 
-      background: radial-gradient(
-        ellipse,
-        rgba(255, 0, 0, 0.9) 0%,
-        rgba(255, 0, 0, 0.35) 35%,
-        rgba(255, 0, 0, 0) 70%
-      );
+/* =========================
+   INTRO
+========================= */
 
-      filter: blur(25px);
-      transform: rotate(-12deg);
+#intro {
+    position: fixed;
+    inset: 0;
 
-      opacity: 0;
-      transition:
-        left 2.5s ease,
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    z-index: 9999;
+}
+
+
+/* =========================
+   ROTER GLOW
+========================= */
+
+#glow {
+    position: absolute;
+
+    width: 65vw;
+    height: 140vh;
+
+    left: -70vw;
+    top: -20vh;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255,0,0,0.95) 0%,
+            rgba(255,0,0,0.55) 20%,
+            rgba(255,0,0,0.20) 45%,
+            transparent 75%
+        );
+
+    filter: blur(30px);
+
+    transform: rotate(-12deg);
+
+    opacity: 0;
+
+    transition:
+        left 2.8s cubic-bezier(.2,.7,.2,1),
         opacity 1.5s ease;
-    }
 
-    /* Lichtkern */
-    #beam {
-      position: absolute;
-      width: 5px;
-      height: 130vh;
-      left: -20vw;
-      top: -15vh;
+    z-index: 1;
+}
 
-      background: #ff0000;
 
-      box-shadow:
+/* =========================
+   LICHTSTRAHL
+========================= */
+
+#beam {
+    position: absolute;
+
+    width: 6px;
+    height: 150vh;
+
+    left: -20vw;
+    top: -25vh;
+
+    background: #ff0000;
+
+    box-shadow:
         0 0 10px #ff0000,
         0 0 30px #ff0000,
-        0 0 70px #ff0000;
+        0 0 70px #ff0000,
+        0 0 120px rgba(255,0,0,.7);
 
-      transform: rotate(-12deg);
+    transform: rotate(-12deg);
 
-      opacity: 0;
-      transition:
-        left 2.5s ease,
+    opacity: 0;
+
+    transition:
+        left 2.8s cubic-bezier(.2,.7,.2,1),
         opacity 1.5s ease;
-    }
 
-    /* Logo */
-    #logo {
-      position: relative;
-      z-index: 10;
+    z-index: 2;
+}
 
-      color: white;
-      text-align: center;
-      font-weight: 900;
 
-      opacity: 0;
-      transform: scale(0.6);
-      filter: blur(15px);
+/* =========================
+   LOGO CONTAINER
+========================= */
 
-      transition:
+#logo {
+    position: relative;
+
+    z-index: 10;
+
+    color: white;
+
+    font-weight: 900;
+
+    text-align: center;
+
+    opacity: 0;
+
+    transform: scale(.65);
+
+    filter: blur(20px);
+
+    transition:
         opacity 1s ease,
-        transform 1s ease,
+        transform 1s cubic-bezier(.2,.8,.2,1),
         filter 1s ease;
-    }
+}
+
+
+/* =========================
+   M
+========================= */
+
+#m {
+    display: block;
+
+    font-size: clamp(150px, 28vw, 380px);
+
+    line-height: .75;
+
+    color: white;
+
+    opacity: 1;
+
+    transform: scale(1);
+
+    filter: blur(0);
+
+    text-shadow: none;
+
+    transition:
+        opacity .8s ease,
+        transform .9s ease,
+        filter .9s ease,
+        text-shadow 1s ease;
+}
+
+
+/* =========================
+   MAXIM
+========================= */
+
+#maxim {
+    display: block;
+
+    font-size: clamp(55px, 10vw, 150px);
+
+    line-height: 1;
+
+    letter-spacing: .08em;
+
+    color: white;
+
+    opacity: 0;
+
+    transform: scaleX(.05);
+
+    filter: blur(15px);
+
+    text-shadow: none;
+
+    transition:
+        opacity 1s ease,
+        transform 1s cubic-bezier(.2,.8,.2,1),
+        filter 1s ease,
+        text-shadow 1s ease;
+}
+
+
+/* =========================
+   1 → LICHT KOMMT
+========================= */
+
+#intro.light #glow {
+    left: 15vw;
+    opacity: 1;
+}
+
+#intro.light #beam {
+    left: 25vw;
+    opacity: 1;
+}
+
+
+/* =========================
+   2 → M ERSCHEINT
+========================= */
+
+#intro.show #logo {
+    opacity: 1;
+
+    transform: scale(1);
+
+    filter: blur(0);
+}
+
+
+/* =========================
+   3 → M GLOW
+========================= */
+
+#intro.m-glow #m {
+
+    text-shadow:
+        0 0 10px #ff0000,
+        0 0 25px #ff0000,
+        0 0 55px #ff0000,
+        0 0 100px rgba(255,0,0,.8);
+
+}
+
+
+/* =========================
+   4 → M WIRD ZU MAXIM
+========================= */
+
+#intro.transform #m {
+
+    opacity: 0;
+
+    transform: scale(1.18);
+
+    filter: blur(18px);
+
+}
+
+
+#intro.transform #maxim {
+
+    opacity: 1;
+
+    transform: scaleX(1);
+
+    filter: blur(0);
+
+    text-shadow:
+        0 0 10px #ff0000,
+        0 0 25px #ff0000,
+        0 0 55px #ff0000,
+        0 0 100px rgba(255,0,0,.65);
+
+}
+
+
+/* =========================
+   5 → LICHT ZIEHT ZURÜCK
+========================= */
+
+#intro.exit #glow {
+
+    left: 120vw;
+
+    opacity: 0;
+
+}
+
+
+#intro.exit #beam {
+
+    left: 130vw;
+
+    opacity: 0;
+
+}
+
+
+/* =========================
+   6 → LOGO VERSCHWINDET
+========================= */
+
+#intro.exit #logo {
+
+    opacity: 0;
+
+    transform: scale(1.04);
+
+    filter: blur(12px);
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
 
     #m {
-      font-size: clamp(140px, 25vw, 350px);
-      line-height: 0.8;
-      display: block;
-
-      text-shadow: none;
-
-      transition:
-        text-shadow 1s ease,
-        opacity 0.8s ease,
-        transform 0.8s ease;
+        font-size: 42vw;
     }
 
     #maxim {
-      font-size: clamp(50px, 9vw, 140px);
-      letter-spacing: 0.05em;
-
-      opacity: 0;
-      transform: scaleX(0.1);
-      filter: blur(12px);
-
-      transition:
-        opacity 1s ease,
-        transform 1s ease,
-        filter 1s ease,
-        text-shadow 1s ease;
-    }
-
-    /* -------------------------
-       ANIMATION
-    ------------------------- */
-
-    /* Licht kommt */
-    #intro.light-on #glow {
-      left: 20vw;
-      opacity: 1;
-    }
-
-    #intro.light-on #beam {
-      left: 28vw;
-      opacity: 1;
-    }
-
-    /* M erscheint */
-    #intro.show-m #logo {
-      opacity: 1;
-      transform: scale(1);
-      filter: blur(0);
-    }
-
-    /* M bekommt Glow */
-    #intro.glow-m #m {
-      text-shadow:
-        0 0 10px #ff0000,
-        0 0 30px #ff0000,
-        0 0 70px rgba(255, 0, 0, 0.9),
-        0 0 120px rgba(255, 0, 0, 0.5);
-    }
-
-    /* M verschwindet */
-    #intro.transform #m {
-      opacity: 0;
-      transform: scale(1.15);
-      filter: blur(15px);
-    }
-
-    /* MAXIM erscheint */
-    #intro.transform #maxim {
-      opacity: 1;
-      transform: scaleX(1);
-      filter: blur(0);
-
-      text-shadow:
-        0 0 10px #ff0000,
-        0 0 30px #ff0000,
-        0 0 70px rgba(255, 0, 0, 0.7);
-    }
-
-    /* Licht zieht zurück */
-    #intro.exit #glow {
-      left: 110vw;
-      opacity: 0;
-    }
-
-    #intro.exit #beam {
-      left: 120vw;
-      opacity: 0;
-    }
-
-    #intro.exit #logo {
-      opacity: 0;
-      transform: scale(1.03);
-      filter: blur(10px);
-    }
-
-    /* Mobile */
-    @media (max-width: 600px) {
-      #m {
-        font-size: 42vw;
-      }
-
-      #maxim {
         font-size: 14vw;
-      }
-
-      #glow {
-        width: 90vw;
-      }
     }
-  </style>
+
+    #glow {
+        width: 100vw;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <div id="intro">
+
+<div id="intro">
 
     <div id="glow"></div>
+
     <div id="beam"></div>
 
     <div id="logo">
-      <span id="m">M</span>
-      <span id="maxim">MAXIM</span>
+
+        <span id="m">M</span>
+
+        <span id="maxim">MAXIM</span>
+
     </div>
 
-  </div>
+</div>
 
 
-  <script>
+<script>
 
-    const intro = document.getElementById("intro");
-
-    /*
-      1. Schwarz
-    */
-
-    setTimeout(() => {
-
-      /*
-        2. Roter Lichtstrahl kommt
-      */
-      intro.classList.add("light-on");
-
-    }, 500);
+const intro = document.getElementById("intro");
 
 
-    setTimeout(() => {
-
-      /*
-        4. Großes M erscheint
-      */
-      intro.classList.add("show-m");
-
-    }, 2500);
+/*
+================================
+START
+================================
+*/
 
 
-    setTimeout(() => {
+/* 1. Erst komplett schwarz */
 
-      /*
-        5. M bekommt roten Glow
-      */
-      intro.classList.add("glow-m");
+setTimeout(() => {
 
-    }, 3600);
+    intro.classList.add("light");
 
-
-    setTimeout(() => {
-
-      /*
-        6. M -> MAXIM
-      */
-      intro.classList.add("transform");
-
-    }, 4500);
+}, 500);
 
 
-    setTimeout(() => {
+/* 2. M erscheint */
 
-      /*
-        7. MAXIM bleibt kurz stehen
-        8. Licht zieht zurück
-      */
-      intro.classList.add("exit");
+setTimeout(() => {
 
-    }, 7000);
+    intro.classList.add("show");
+
+}, 2600);
 
 
-    setTimeout(() => {
+/* 3. M bekommt roten Glow */
 
-      /*
-        Intro komplett entfernen.
-        Hier kann später dein Homescreen stehen.
-      */
-      intro.style.display = "none";
+setTimeout(() => {
 
-    }, 8500);
+    intro.classList.add("m-glow");
 
-  </script>
+}, 3800);
+
+
+/* 4. M wird MAXIM */
+
+setTimeout(() => {
+
+    intro.classList.add("transform");
+
+}, 4800);
+
+
+/* 5. MAXIM bleibt stehen */
+
+setTimeout(() => {
+
+    intro.classList.add("exit");
+
+}, 7200);
+
+
+/* 6. Intro komplett entfernen */
+
+setTimeout(() => {
+
+    intro.remove();
+
+}, 9000);
+
+</script>
+
 
 </body>
 </html>
